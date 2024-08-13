@@ -11,6 +11,9 @@ st.write(
 
 cnx = st.connection("snowflake")
 session = cnx.session()
+
+name_on_order = st.text_input('Name on Smoothie:')
+
 my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'))
 #st.dataframe(data=my_dataframe, use_container_width=True)
 
@@ -20,19 +23,19 @@ ingredients_list = st.multiselect(
 )
 
 if ingredients_list:
-    st.write(ingredients_list)
+    #st.write(ingredients_list)
     #st.text(ingredients_list)
 
     ingredients_string = ''
     for f in ingredients_list:
         ingredients_string += f + ' '
 
-    #st.write(ingredients_string)
+    st.write(ingredients_string)
     
     time_to_insert = st.button('Submit Order')
     if time_to_insert:
-        my_insert_stmt = """ insert into smoothies.public.orders(ingredients)
-            values ('""" + ingredients_string + """')"""
+          my_insert_stmt = """ insert into smoothies.public.orders(NAME_ON_ORDER, INGREDIENTS)
+            values ('""" + name_on_order + """', '"""+ ingredients_string + """')"""
 
         if ingredients_string:
             session.sql(my_insert_stmt).collect()
