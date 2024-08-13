@@ -28,12 +28,17 @@ st.stop()
 ingredients_list = st.multiselect(
     'Cooose up to 5 ingredients: '
     , my_dataframe
+    , max_selections = 5
 )
 
 if ingredients_list:
     ingredients_string = ''
     for fruit_choosen in ingredients_list:
         ingredients_string += fruit_choosen + ' '
+        
+        search_on=pd_df.loc[pd_df['FRUIT_NAME'] == fruit_chosen, 'SEARCH_ON'].iloc[0]
+        st.write('The search value for ', fruit_chosen,' is ', search_on, '.')
+        
         st.subheader(fruit_choosen + ' Nutrition Informaton')
         fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choosen)
         fv_df = st.dataframe(data=fruityvice_response.json(), use_container_width=True)
