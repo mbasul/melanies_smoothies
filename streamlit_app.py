@@ -9,13 +9,6 @@ st.write(
     """
 )
 
-option = st.selectbox(
-    "What is your favorite fruit?",
-    ("Banana", "Strawberries", "Peaches"),
-    index=None,
-    placeholder="Select contact method...",
-)
-
 cnx = st.connection("snowflake")
 session = cnx.session()
 my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'))
@@ -28,7 +21,7 @@ ingredients_list = st.multiselect(
 
 if ingredients_list:
     st.write(ingredients_list)
-    st.text(ingredients_list)
+    #st.text(ingredients_list)
 
     ingredients_string = ''
     for f in ingredients_list:
