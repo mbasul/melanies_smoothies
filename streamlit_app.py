@@ -15,16 +15,16 @@ session = cnx.session()
 
 name_on_order = st.text_input('Name on Smoothie:')
 
-my_dataframe = session.table("smoothies.public.fruit_options").select(col('SEARCH_ON'))
-#st.dataframe(data=my_dataframe, use_container_width=True)
-
+my_dataframe = session.table("smoothies.public.fruit_options").select(col('SEARCH_ON', col('SEARCH_ON'))
+st.dataframe(data=my_dataframe, use_container_width=True)
+st.stop()
 # -------------------------------------------------------------------
-res = my_dataframe.collect()
-for R in res:
-    F = R['SEARCH_ON']
-    fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+F)
-    st.write(F+str(fruityvice_response))
-
+#res = my_dataframe.collect()
+#for R in res:
+#    F = R['SEARCH_ON']
+#    fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+F)
+#    st.write(F+str(fruityvice_response))
+#
 # -------------------------------------------------------------------
 ingredients_list = st.multiselect(
     'Cooose up to 5 ingredients: '
