@@ -18,6 +18,14 @@ name_on_order = st.text_input('Name on Smoothie:')
 my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'))
 #st.dataframe(data=my_dataframe, use_container_width=True)
 
+# -------------------------------------------------------------------
+res = my_dataframe.collect()
+for R in res:
+    F = R['FRUIT_NAME']
+    st.write("https://fruityvice.com/api/fruit/"+F)
+    #fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+F)
+
+# -------------------------------------------------------------------
 ingredients_list = st.multiselect(
     'Cooose up to 5 ingredients: '
     , my_dataframe
