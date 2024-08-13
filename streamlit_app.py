@@ -23,7 +23,7 @@ res = my_dataframe.collect()
 for R in res:
     F = R['FRUIT_NAME']
     fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+F)
-    st.write(F+fruityvice_response)
+    st.write(F+str(fruityvice_response))
 
 # -------------------------------------------------------------------
 ingredients_list = st.multiselect(
