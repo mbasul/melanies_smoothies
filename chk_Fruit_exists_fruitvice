@@ -1,9 +1,21 @@
 import streamlit as st
 from snowflake.snowpark.context import get_active_session
+from snowflake.snowpark.functions import col
+import requests
 
 st.title("Check Existence of Fruits in FRUIT_OPTIONS Table")
 
-session = get_active_session()
+cnx = st.connection("snowflake")
+session = cnx.session()
 
-for F in session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME')):
-    st.write(F)
+my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'))
+#st.dataframe(data=my_dataframe, use_container_width=True)
+
+res = my_dataframe.collect()
+#st.text(res)
+
+for R in res:
+    F = R['FRUIT_NAME']
+    st.write("https://fruityvice.com/api/fruit/"+F)
+    #fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+F)
+    #st.write(F|+':   '+fruityvice_response::varchar)
